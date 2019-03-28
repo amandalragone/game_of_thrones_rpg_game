@@ -3,6 +3,7 @@ $(document).ready(function(){
 
     var fighter
     var enemy
+    var isThereADefender
 
     // User will click an image to pick fighter.
 
@@ -10,17 +11,21 @@ $(document).ready(function(){
         fighter = ($(this));
 
         // Enemies will move to a different area of the page.
-        $(this).siblings().appendTo(".enemy");
-    })
+        $(this).siblings()
+        .addClass("enemiesAvailable")
+        .appendTo("#enemy")
+        .on("click", function(){ // User will click on an enemy to choose it.
+            enemy = ($(this));
 
-    // User will click on an enemy to choose it.
-    //this is not working yet:
-    $(".enemy .character").addClass("enemies_available");
+            $("#defender").html(this);
+            isThereADefender = true;
 
-    $(".enemies_available").on("click", function(){
-        enemy = ($(this));
-        $(this).appendTo(".defender");
+            if (isThereADefender === true){
+                $(".enemiesAvailable").off("click");
+            };
+        });
+    });
 
-    })
+    
 
 })
