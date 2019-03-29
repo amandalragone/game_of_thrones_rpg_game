@@ -5,6 +5,32 @@ $(document).ready(function(){
     var enemy
     var isThereADefender
 
+    //Each character needs a set of values: Health Points, Attack Power and Counter Attack Power
+    var fighterPower = {
+        $("#martell"): {
+            healthPoints: 100,
+            attackPower: 9,
+            counterAttackPower: 23,
+        },
+        $("#snow"): {
+            healthPoints: 110,
+            attackPower: 8,
+            counterAttackPower: 20,
+        },
+        $("#mountain"): {
+            healthPoints: 120,
+            attackPower: 7,
+            counterAttackPower: 18,
+        }, 
+        $("#night"): {
+            healthPoints: 130,
+            attackPower: 6,
+            counterAttackPower: 15,
+        },
+
+    };
+
+
     // User will click an image to pick fighter.
 
     $(".character").on("click", function(){
@@ -26,6 +52,7 @@ $(document).ready(function(){
         });
     });
 
+    
     
 
 })
