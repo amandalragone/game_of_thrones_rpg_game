@@ -7,7 +7,8 @@ $(document).ready(function(){
     var enemyID
     var isThereADefender
     var isThereAFighter
-    var enemiesDefeated
+    var enemiesAvailable = 3
+
 
     //Each character needs a set of values: Health Points, Attack Power and Counter Attack Power
 
@@ -19,11 +20,12 @@ $(document).ready(function(){
     
     var newGame = function(){
         
+        enemiesAvailable = 3;
+        
         $("#defender").empty();
         $("#fightStatus_attack").empty();
         $("#fightStatus_counterAttack").empty();
         $("#wins_losses").empty();
-        enemiesDefeated = 0;
         clickCount = 0;
         isThereADefender = false;
         isThereAFighter = false;
@@ -72,7 +74,7 @@ $(document).ready(function(){
             fighter = $(this);
             fighterID = fighter.find("img").attr("id");
             console.log(fighterID);
-            isThereAFighter = true
+            isThereAFighter = true;
     
             // Enemies will move to a different area of the page.
             $(this).siblings()
@@ -93,6 +95,8 @@ $(document).ready(function(){
             $("#wins_losses").empty();
 
             isThereADefender = true; 
+            --enemiesAvailable;
+            console.log(enemiesAvailable);
         };
         
     });
@@ -101,11 +105,13 @@ $(document).ready(function(){
 
     $("#attack").on("click", function() {
 
+        console.log(enemiesAvailable);
+
         if (isThereADefender === false) {
 
             $("#defender").html("<div class='col'><p></br></br>No enemy here.</p></div>");
             
-        } else {
+        } else if (isThereADefender === true) {
 
             fighterID = fighter.find("img").attr("id");
             enemyID = enemy.find("img").attr("id");
@@ -130,19 +136,31 @@ $(document).ready(function(){
         };
 
     };
-        
-        
-        if (enemyHealth <= 0) {
 
-            enemiesDefeated = enemiesDefeated++;
+        if ((enemiesAvailable > 0) && (enemyHealth <= 0)) {
+
+    
             $("#defender .health_points").text(0);
             $("#wins_losses").text("You have defeated " + fighterPower[enemyID].fullName + " . You can choose to fight another enemy.");
             $("#defender").empty();
             $("#fightStatus_attack").empty();
             $("#fightStatus_counterAttack").empty();
             isThereADefender = false;
-        } else if (fighterHealth <= 0) {
 
+        } else if ((enemiesAvailable === 0) && (enemyHealth <= 0)) {
+    
+            $("#defender .health_points").text(0);
+            $("#wins_losses").html("<div class='col'><p></br></br>You won!!! GAME OVER!!!</p></div> <div class='row'><div class='col'><button id='restart'>Restart</button></div></div>");
+            $("#defender").empty();
+            $("#fightStatus_attack").empty();
+            $("#fightStatus_counterAttack").empty();
+    
+            $(document).on("click", "#restart", function() {
+                newGame();
+                document.location.reload();
+            });
+        } else if (fighterHealth <= 0) {
+    
             $("#fighter .health_points").text(0);
             $("#wins_losses").html("<div class='col'><p></br></br>You've been defeated. GAME OVER!</p></div> <div class='row'><div class='col'><button id='restart'>Restart</button></div></div>");
         
@@ -153,20 +171,13 @@ $(document).ready(function(){
                 newGame();
                 document.location.reload();
             });
-        } else if (enemiesDefeated === 3) {
-            $("#wins_losses").html("<div class='col'><p></br></br>You won!!! GAME OVER!!!</p></div> <div class='row'><div class='col'><button id='restart'>Restart</button></div></div>");
-            $("#defender").empty();
-            $("#fightStatus_attack").empty();
-            $("#fightStatus_counterAttack").empty();
-
-            $(document).on("click", "#restart", function() {
-                newGame();
-                document.location.reload();
-            });
         };
-    
 
+    
+        
     });
+
+    
     
 
     newGame();
