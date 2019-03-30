@@ -79,7 +79,10 @@ $(document).ready(function(){
             // Enemies will move to a different area of the page.
             $(this).siblings()
             .addClass("enemiesAvailable")
-            .appendTo("#enemy");
+            .appendTo("#enemy").css( {
+                "background-color": "red",
+                "border-color": "black"
+            } );
 
         //If Fighter has been chosen, element clicked will become the Defender.  
         } else {
@@ -90,7 +93,12 @@ $(document).ready(function(){
             console.log(enemyID);
 
             //Defender will move to the appropriate area.
-            $("#defender").html(this);
+            $("#defender").html(this)
+            $("#defender .character").css( {
+                "background-color": "black",
+                "border-color": "green",
+                "color": "white"
+            });
 
             $("#wins_losses").empty();
 
@@ -150,7 +158,7 @@ $(document).ready(function(){
         } else if ((enemiesAvailable === 0) && (enemyHealth <= 0)) {
     
             $("#defender .health_points").text(0);
-            $("#wins_losses").html("<div class='col'><p></br></br>You won!!! GAME OVER!!!</p></div> <div class='row'><div class='col'><button id='restart'>Restart</button></div></div>");
+            $("#wins_losses").html("<p></br></br>You won!!! GAME OVER!!!</p><button id='restart'>Restart</button>");
             $("#defender").empty();
             $("#fightStatus_attack").empty();
             $("#fightStatus_counterAttack").empty();
@@ -162,7 +170,7 @@ $(document).ready(function(){
         } else if (fighterHealth <= 0) {
     
             $("#fighter .health_points").text(0);
-            $("#wins_losses").html("<div class='col'><p></br></br>You've been defeated. GAME OVER!</p></div> <div class='row'><div class='col'><button id='restart'>Restart</button></div></div>");
+            $("#wins_losses").html("<p></br></br>You've been defeated. GAME OVER!</p><button id='restart'>Restart</button>");
         
             $("#fightStatus_attack").empty();
             $("#fightStatus_counterAttack").empty();
