@@ -18,7 +18,11 @@ $(document).ready(function(){
     
     
     var newGame = function(){
-
+        
+        $("#defender").empty();
+        $("#fightStatus_attack").empty();
+        $("#fightStatus_counterAttack").empty();
+        $("#wins_losses").empty();
         enemiesDefeated = 0;
         clickCount = 0;
         isThereADefender = false;
@@ -95,7 +99,7 @@ $(document).ready(function(){
 
     //User will play the game when clicking the attack button.
 
-    $("#attack").on("click", function(){
+    $("#attack").on("click", function() {
 
         if (isThereADefender === false) {
 
@@ -109,7 +113,7 @@ $(document).ready(function(){
                 clickCount++;
                 $("#fightStatus_attack").text("You attacked " + fighterPower[enemyID].fullName + " for " + (fighterPower[fighterID].attackPower * clickCount) + " damage.");
                 $("#fightStatus_counterAttack").text(fighterPower[enemyID].fullName + " attacked you back for " + fighterPower[enemyID].counterAttackPower + " damage.");
-        }
+        
 
         if (clickCount === 1) {
             enemyHealth = fighterPower[enemyID].healthPoints - fighterPower[fighterID].attackPower;
@@ -124,6 +128,8 @@ $(document).ready(function(){
             fighterHealth = fighterHealth - fighterPower[enemyID].counterAttackPower;
             $("#fighter .health_points").text(fighterHealth);
         };
+
+    };
         
         
         if (enemyHealth <= 0) {
@@ -145,6 +151,7 @@ $(document).ready(function(){
             
             $(document).on("click", "#restart", function() {
                 newGame();
+                document.location.reload();
             });
         } else if (enemiesDefeated === 3) {
             $("#wins_losses").html("<div class='col'><p></br></br>You won!!! GAME OVER!!!</p></div> <div class='row'><div class='col'><button id='restart'>Restart</button></div></div>");
@@ -154,6 +161,7 @@ $(document).ready(function(){
 
             $(document).on("click", "#restart", function() {
                 newGame();
+                document.location.reload();
             });
         };
     
@@ -162,6 +170,7 @@ $(document).ready(function(){
     
 
     newGame();
+    // document.location.reload();
     
 
 })
